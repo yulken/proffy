@@ -6,9 +6,14 @@ const styles = StyleSheet.create({
         padding: 40,
     },
     topBar:{
-      flexDirection: 'row' ,
-      alignItems: 'center',
-      justifyContent: 'space-between',
+        flexDirection: 'row' ,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    header: {
+        flexDirection: 'row' ,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     title:{
         fontFamily: 'Archivo_700Bold',
