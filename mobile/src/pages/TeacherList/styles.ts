@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 const styles = StyleSheet.create({
     container: {
@@ -10,7 +9,7 @@ const styles = StyleSheet.create({
         marginTop: -40,
     },
     searchForm: {
-        marginBottom: 24,
+        marginBottom: 8,
     },
     label: {
         color: '#d4c2ff',

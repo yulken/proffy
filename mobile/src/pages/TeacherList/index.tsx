@@ -12,6 +12,7 @@ function TeacherList(){
     const [teachers, setTeachers] = useState([]);
     const [favorites, setFavorites] = useState<number[]>([]);
     const [isFilterVisible, setFilterVisible] = useState(false);
+
     const [subject, setSubject] = useState('');
     const [week_day, setWeekDay] = useState('');
     const [time, setTime] = useState('');
@@ -20,9 +21,12 @@ function TeacherList(){
         AsyncStorage.getItem('favorites').then(response => {
             if (response){
                 const addedToFavoriteTeachers = JSON.parse(response);
-                const favoritedTeachersIds = addedToFavoriteTeachers.map((teacher : Teacher) =>{
+                console.log(response);
+                
+                const favoriteTeachersIds = addedToFavoriteTeachers.map((teacher : Teacher) =>{
                     return teacher.id;
                 })
+                setFavorites(addedToFavoriteTeachers);
             }
         });
     }
@@ -33,15 +37,20 @@ function TeacherList(){
 
     async function handleFiltersSubmit(){
         loadFavorites();
-        const response = await api.get('classes',{
+        const response = await api.get('http://192.168.1.109:3333/classes',{
             params:{
                 subject,
                 week_day,
                 time
             }
+        }).catch(error => {
+            console.log(error)
         });
-        setTeachers(response.data);
+        if (response && response.data){
+            setTeachers(response.data);
+        }
     }
+    
     return (
         <View style={styles.container}>
             <PageHeader 
@@ -68,7 +77,8 @@ function TeacherList(){
                                 <TextInput
                                     style={styles.input}
                                     value={week_day}
-                                    onChangeText={text => setWeekDay(text)}                                    placeholder="Qual o dia?"
+                                    onChangeText={text => setWeekDay(text)}                                    
+                                    placeholder="Qual o dia?"
                                     placeholderTextColor="#c1bccc"
                                 />
                             </View>
@@ -77,13 +87,14 @@ function TeacherList(){
                                 <TextInput
                                     style={styles.input}
                                     value={time}
-                                    onChangeText={text => setTime(text)}                                    placeholder="Qual o horário?"
+                                    onChangeText={text => setTime(text)}                                    
+                                    placeholder="Qual o horário?"
                                     placeholderTextColor="#c1bccc"
                                 />
                             </View>
                         </View>
                         <RectButton onPress={handleFiltersSubmit} style={styles.submitButton}>
-                            <Text style={styles.submitButtonText}></Text>
+                            <Text style={styles.submitButtonText}>Filtrar</Text>
                         </RectButton>
                     </View>
                 )}

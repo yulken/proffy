@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {View, Image, Text, Linking, AsyncStorage} from 'react-native';
-import { BorderlessButton, RectButton } from "react-native-gesture-handler";
+import { RectButton } from "react-native-gesture-handler";
 
 import heartOutlineIcon from '../../assets/images/icons/heart-outline.png'
 import unfavoriteIcon from '../../assets/images/icons/unfavorite.png'
@@ -31,6 +31,8 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher, addedToFavorites}) =>
     async function handleToggleFavorite(){
         const favorites = await AsyncStorage.getItem('favorites');
         let favoritesArray = [];
+        console.log(`addedToFavorites: ${addedToFavorites}`)
+        console.log(`isAddedToFavorites: ${isAddedToFavorites}\n`)
 
         if (favorites){
             favoritesArray = JSON.parse(favorites);
@@ -75,7 +77,9 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher, addedToFavorites}) =>
                         onPress={handleToggleFavorite} 
                         style={[
                             styles.favoriteButton, 
-                            addedToFavorites? styles.addedToFavorite : {}]}>
+                                addedToFavorites
+                                ? styles.addedToFavorite 
+                                : {}]}>
                         { addedToFavorites 
                             ? <Image source={unfavoriteIcon} />
                             : <Image source={heartOutlineIcon}/>}
